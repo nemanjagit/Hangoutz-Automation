@@ -1,4 +1,4 @@
-package qa;
+package com.qa;
 
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
@@ -8,9 +8,9 @@ import io.appium.java_client.ios.options.XCUITestOptions;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import utils.TestUtils;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import com.qa.utils.TestUtils;
 
 import java.io.InputStream;
 import java.net.URI;
@@ -19,32 +19,33 @@ import java.util.Properties;
 
 
 public class BaseTest {
-    protected static AppiumDriver driver;
-    protected static Properties properties;
+    public static AppiumDriver driver;
+    protected Properties properties;
     InputStream inputStream;
     public String platformName;
 
-    @BeforeClass
-    public void beforeClass() throws Exception {
+    @BeforeMethod
+    public void before() throws Exception {
 
         try {
             properties = new Properties();
             String propertyFileName = "config.properties";
             inputStream = getClass().getClassLoader().getResourceAsStream(propertyFileName);
             properties.load(inputStream);
-            URI appUri = URI.create(properties.getProperty("appiumURL"));
+            URI appUri = URI.create(properties.getProperty("appiumUrl"));
             URL url = appUri.toURL();
 
             platformName = properties.getProperty("platformName");
             String appUrl;
             switch (platformName) {
                 case "Android":
-                    appUrl = getClass().getClassLoader().getResource(properties.getProperty("androidAppLocation")).getFile();
+                    appUrl = getClass().getResource(properties.getProperty("androidAppLocation")).getFile();
                     UiAutomator2Options androidOptions = new UiAutomator2Options();
                     androidOptions.
                             setAutomationName(properties.getProperty("androidAutomationName")).
                             setAppPackage(properties.getProperty("androidAppPackage")).
                             setAppActivity(properties.getProperty("androidAppActivity")).
+                            setUdid(properties.getProperty("androidUdId")).
                             setApp(appUrl);
                     driver = new AndroidDriver(url, androidOptions);
                     break;
@@ -89,8 +90,18 @@ public class BaseTest {
         return element.getText();
     }
 
-    @AfterClass
-    public void afterClass(){
+    public void clear(WebElement element) {
+        waitForVisibility(element);
+        element.clear();
+    }
+
+    public boolean isDisplayed(WebElement element) {
+        waitForVisibility(element);
+        return element.isDisplayed();
+    }
+
+    @AfterMethod
+    public void afterMethod(){
         driver.quit();
     }
 
