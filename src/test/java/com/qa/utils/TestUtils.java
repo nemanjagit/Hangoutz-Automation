@@ -1,4 +1,4 @@
-package utils;
+package com.qa.utils;
 
 import java.time.Duration;
 

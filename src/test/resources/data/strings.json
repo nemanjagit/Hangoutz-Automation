@@ -1,0 +1,21 @@
+{
+  "loginScreen": {
+    "validEmail": "nemanja@gmail.com",
+    "invalidEmail": "@gmail.com",
+    "validPassword": "Nemanja9",
+    "invalidPassword": "12345678",
+    "incorrectErrorMessage": "Incorrect email or password",
+    "emptyErrorMessage": "All fields must be filled!"
+  },
+  "registrationScreen": {
+    "title": "PRODUCTS",
+    "SLBTitle": "Sauce Labs Backpack",
+    "SLBPrice": "$29.99"
+  },
+  "eventScreen": {
+    "SLBTitle": "Sauce Labs Backpack",
+    "SLBDescription" : "carry.allTheThings() with the sleek, streamlined Sly Pack that melds uncompromising style with unequaled laptop and tablet protection.",
+    "SLBPrice": "$29.99"
+  }
+}
+
