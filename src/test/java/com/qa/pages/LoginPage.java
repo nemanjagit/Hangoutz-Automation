@@ -69,5 +69,10 @@ public class LoginPage extends BaseTest {
         return element.getText();
     }
 
+    public EventPage Login (String email, String password) {
+        enterEmail(email);
+        enterPassword(password);
+        return clickLoginButton();
+    }
 
 }
