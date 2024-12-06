@@ -73,7 +73,7 @@ public class BaseTest {
     }
 
     public void waitForVisibility(WebElement element) {
-        WebDriverWait wait = new WebDriverWait(driver, TestUtils.WAIT);
+        WebDriverWait wait = new WebDriverWait(driver, TestUtils.SHORT_WAIT);
         wait.until(ExpectedConditions.visibilityOf(element));
     }
 
@@ -104,6 +104,15 @@ public class BaseTest {
 
     public static void hideIOSKeyboard(){
         driver.findElement(By.xpath("//XCUIElementTypeTextField")).sendKeys(Keys.RETURN);
+    }
+
+    public boolean isPresent(WebElement element) {
+        try {
+            isDisplayed(element);
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
     }
 
     @AfterMethod

@@ -16,16 +16,14 @@
     "invalidPassword": "1234567",
     "invalidConfirmPassword": "milan",
     "emptyErrorMessage": "All fields must be filled!",
-    "emptyErrorMessageiOS": "All fields must be filled.",
     "invalidNameMessage": "Name must be 3–25 characters",
     "invalidEmailMessage": "Email must be in correct format",
     "invalidPasswordMessage": "Password must contain at least one number and be minimum 8 characters long",
     "invalidConfirmPasswordMessage": "Passwords must match",
     "existingEmailErrorMessage": "Email already in use"
   },
-  "eventScreen": {
-    "SLBTitle": "Sauce Labs Backpack",
-    "SLBDescription" : "carry.allTheThings() with the sleek, streamlined Sly Pack that melds uncompromising style with unequaled laptop and tablet protection.",
+  "settingsScreen": {
+    "enteredName": "Nemanjaaa",
     "SLBPrice": "$29.99"
   }
 }

@@ -1,16 +1,11 @@
 package com.qa.pages;
 
+import com.qa.BottomNavigation;
 import io.appium.java_client.pagefactory.AndroidFindBy;
-import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import io.appium.java_client.pagefactory.iOSXCUITFindBy;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.PageFactory;
-import com.qa.BaseTest;
 
-public class EventPage extends BaseTest {
-    public EventPage() {
-        PageFactory.initElements(new AppiumFieldDecorator(driver), this);
-    }
+public class EventPage extends BottomNavigation {
 
     @AndroidFindBy(xpath = "//android.widget.TextView[@text=\"GOING\"]")
     @iOSXCUITFindBy(xpath = "//XCUIElementTypeStaticText[@name=\"filterBar\" and @label=\"GOING\"]")

@@ -64,8 +64,17 @@ public class LoginPage extends BaseTest {
     }
 
     public String getErrorMessage(WebElement element) {
-        waitForVisibility(element);
-        return element.getText();
+        return getText(element);
+    }
+
+    public EventPage login(String email, String password) {
+        enterEmail(email);
+        enterPassword(password);
+        return clickLoginButton();
+    }
+
+    public boolean isLogoPresent(){
+        return isPresent(logo);
     }
 
     public EventPage Login (String email, String password) {
