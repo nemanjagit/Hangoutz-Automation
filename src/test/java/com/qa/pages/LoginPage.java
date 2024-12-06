@@ -77,5 +77,10 @@ public class LoginPage extends BaseTest {
         return isPresent(logo);
     }
 
+    public EventPage Login (String email, String password) {
+        enterEmail(email);
+        enterPassword(password);
+        return clickLoginButton();
+    }
 
 }

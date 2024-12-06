@@ -20,7 +20,7 @@
     "invalidEmailMessage": "Email must be in correct format",
     "invalidPasswordMessage": "Password must contain at least one number and be minimum 8 characters long",
     "invalidConfirmPasswordMessage": "Passwords must match",
-    "existingEmailErrorMessage": "Email alredy in use"
+    "existingEmailErrorMessage": "Email already in use"
   },
   "settingsScreen": {
     "enteredName": "Nemanjaaa",

@@ -5,6 +5,8 @@ import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.options.UiAutomator2Options;
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.options.XCUITestOptions;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -98,6 +100,10 @@ public class BaseTest {
     public boolean isDisplayed(WebElement element) {
         waitForVisibility(element);
         return element.isDisplayed();
+    }
+
+    public static void hideIOSKeyboard(){
+        driver.findElement(By.xpath("//XCUIElementTypeTextField")).sendKeys(Keys.RETURN);
     }
 
     public boolean isPresent(WebElement element) {
