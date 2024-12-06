@@ -19,6 +19,7 @@ public class LoginTests extends BaseTest {
     JSONObject data;
     EventPage eventPage;
     RegistrationPage registrationPage;
+    JSONObject loginScreen;
 
     @BeforeClass
     public void beforeClass() throws Exception {
@@ -28,6 +29,8 @@ public class LoginTests extends BaseTest {
             JSONTokener tokener = new JSONTokener(dataIs);
 
             data = new JSONObject(tokener);
+            loginScreen = data.getJSONObject("loginScreen");
+
         } catch (Exception e) {
             e.printStackTrace();
             throw e;
@@ -47,10 +50,10 @@ public class LoginTests extends BaseTest {
     @Test
     public void incorrectPasswordLogin(){
         Assert.assertTrue(isDisplayed(loginPage.logo));
-        loginPage.enterEmail(data.getJSONObject("loginScreen").getString("validEmail"));
-        loginPage.enterPassword(data.getJSONObject("loginScreen").getString("invalidPassword"));
+        loginPage.enterEmail(loginScreen.getString("validEmail"));
+        loginPage.enterPassword(loginScreen.getString("invalidPassword"));
         eventPage = loginPage.clickLoginButton();
-        String expectedErrorMessage = data.getJSONObject("loginScreen").getString("incorrectErrorMessage");
+        String expectedErrorMessage = loginScreen.getString("incorrectErrorMessage");
         String actualErrorMessage = loginPage.getErrorMessage(loginPage.incorrectErrorMessage);
         Assert.assertEquals(actualErrorMessage, expectedErrorMessage);
     }
@@ -58,10 +61,10 @@ public class LoginTests extends BaseTest {
     @Test
     public void incorrectEmailLogin(){
         Assert.assertTrue(isDisplayed(loginPage.logo));
-        loginPage.enterEmail(data.getJSONObject("loginScreen").getString("invalidEmail"));
-        loginPage.enterPassword(data.getJSONObject("loginScreen").getString("validPassword"));
+        loginPage.enterEmail(loginScreen.getString("invalidEmail"));
+        loginPage.enterPassword(loginScreen.getString("validPassword"));
         eventPage = loginPage.clickLoginButton();
-        String expectedErrorMessage = data.getJSONObject("loginScreen").getString("incorrectErrorMessage");
+        String expectedErrorMessage = loginScreen.getString("incorrectErrorMessage");
         String actualErrorMessage = loginPage.getErrorMessage(loginPage.incorrectErrorMessage);
         Assert.assertEquals(actualErrorMessage, expectedErrorMessage);
     }
@@ -69,9 +72,9 @@ public class LoginTests extends BaseTest {
     @Test
     public void emptyEmailLogin(){
         Assert.assertTrue(isDisplayed(loginPage.logo));
-        loginPage.enterPassword(data.getJSONObject("loginScreen").getString("validPassword"));
+        loginPage.enterPassword(loginScreen.getString("validPassword"));
         eventPage = loginPage.clickLoginButton();
-        String expectedErrorMessage = data.getJSONObject("loginScreen").getString("emptyErrorMessage");
+        String expectedErrorMessage = loginScreen.getString("emptyErrorMessage");
         String actualErrorMessage = loginPage.getErrorMessage(loginPage.emptyErrorMessage);
         Assert.assertEquals(actualErrorMessage, expectedErrorMessage);
     }
@@ -79,9 +82,9 @@ public class LoginTests extends BaseTest {
     @Test
     public void emptyPasswordLogin(){
         Assert.assertTrue(isDisplayed(loginPage.logo));
-        loginPage.enterEmail(data.getJSONObject("loginScreen").getString("validEmail"));
+        loginPage.enterEmail(loginScreen.getString("validEmail"));
         eventPage = loginPage.clickLoginButton();
-        String expectedErrorMessage = data.getJSONObject("loginScreen").getString("emptyErrorMessage");
+        String expectedErrorMessage = loginScreen.getString("emptyErrorMessage");
         String actualErrorMessage = loginPage.getErrorMessage(loginPage.emptyErrorMessage);
         Assert.assertEquals(actualErrorMessage, expectedErrorMessage);
     }
@@ -96,9 +99,7 @@ public class LoginTests extends BaseTest {
     @Test
     public void successfulLogin(){
         Assert.assertTrue(isDisplayed(loginPage.logo));
-        loginPage.enterEmail(data.getJSONObject("loginScreen").getString("validEmail"));
-        loginPage.enterPassword(data.getJSONObject("loginScreen").getString("validPassword"));
-        eventPage = loginPage.clickLoginButton();
+        eventPage = loginPage.login(loginScreen.getString("validEmail"), loginScreen.getString("validPassword"));
         Assert.assertTrue(isDisplayed(eventPage.going));
     }
 

@@ -3,7 +3,6 @@ package com.qa.pages;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import io.appium.java_client.pagefactory.iOSXCUITFindBy;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import com.qa.BaseTest;
@@ -65,8 +64,17 @@ public class LoginPage extends BaseTest {
     }
 
     public String getErrorMessage(WebElement element) {
-        waitForVisibility(element);
-        return element.getText();
+        return getText(element);
+    }
+
+    public EventPage login(String email, String password) {
+        enterEmail(email);
+        enterPassword(password);
+        return clickLoginButton();
+    }
+
+    public boolean isLogoPresent(){
+        return isPresent(logo);
     }
 
 
