@@ -39,11 +39,11 @@ public class RegistrationPage extends BaseTest {
     public WebElement createAccountButton;
 
     @AndroidFindBy(xpath = "//android.widget.TextView[@text=\"All fields must be filled!\"]")
-    @iOSXCUITFindBy(accessibility = "All fields must be filled.")
+    @iOSXCUITFindBy(accessibility = "All fields must be filled!")
     public WebElement emptyErrorMessage;
 
     @AndroidFindBy(xpath = "//android.widget.TextView[@text=\"Name must be 3–25 characters\"]")
-    @iOSXCUITFindBy(accessibility = "Name must be 3-25 characters")
+    @iOSXCUITFindBy(accessibility = "Name must be 3–25 characters")
     public WebElement invalidNameErrorMessage;
 
     @AndroidFindBy(xpath = "//android.widget.TextView[@text=\"Email must be in correct format\"]")
@@ -55,7 +55,7 @@ public class RegistrationPage extends BaseTest {
     public WebElement invalidPasswordErrorMessage;
 
     @AndroidFindBy(xpath = "//android.widget.TextView[@text=\"Passwords must match\"]")
-    @iOSXCUITFindBy(accessibility = "Password must match")
+    @iOSXCUITFindBy(accessibility = "Passwords must match")
     public WebElement invalidConfirmPasswordErrorMessage;
 
     @AndroidFindBy(xpath = "//android.widget.TextView[@text=\"Email already in use\"]")

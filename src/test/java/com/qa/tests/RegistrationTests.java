@@ -12,6 +12,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.io.InputStream;
+import java.util.Random;
 
 public class RegistrationTests extends BaseTest {
     RegistrationPage registrationPage;
@@ -19,6 +20,8 @@ public class RegistrationTests extends BaseTest {
     InputStream dataIs;
     LoginPage loginPage;
     EventPage eventPage;
+    JSONObject registrationScreen;
+    Random random = new Random();
 
     @BeforeClass
     public void beforeClass() throws Exception {
@@ -28,6 +31,7 @@ public class RegistrationTests extends BaseTest {
             JSONTokener tokener = new JSONTokener(dataIs);
 
             data = new JSONObject(tokener);
+            registrationScreen = data.getJSONObject("registrationScreen");
         } catch (Exception e) {
             e.printStackTrace();
             throw e;
@@ -49,16 +53,17 @@ public class RegistrationTests extends BaseTest {
     @Test(priority = 6)
     public void successfulRegistration() {
         Assert.assertTrue(isDisplayed(registrationPage.logo));
-        registrationPage.enterName(data.getJSONObject("registrationScreen").getString("validName"));
-        registrationPage.enterEmail(data.getJSONObject("registrationScreen").getString("validEmail"));
-        registrationPage.enterPassword(data.getJSONObject("registrationScreen").getString("validPassword"));
-        registrationPage.enterConfirmPassword(data.getJSONObject("registrationScreen").getString("validPassword"));
+        registrationPage.enterName(registrationScreen.getString("validName"));
+        int randomInt = random.nextInt(10000000);
+        registrationPage.enterEmail(randomInt + registrationScreen.getString("validEmail"));
+        registrationPage.enterPassword(registrationScreen.getString("validPassword"));
+        registrationPage.enterConfirmPassword(registrationScreen.getString("validPassword"));
         if (platformName.equals("iOS")) {
             hideIOSKeyboard();
         }
         loginPage = registrationPage.clickCreateAccountButton();
         Assert.assertTrue(isDisplayed(loginPage.logo));
-        eventPage = loginPage.Login(data.getJSONObject("registrationScreen").getString("validEmail"), data.getJSONObject("registrationScreen").getString("validPassword"));
+        eventPage = loginPage.login(randomInt + registrationScreen.getString("validEmail"), registrationScreen.getString("validPassword"));
         Assert.assertTrue(isDisplayed((eventPage.going)));
 
     }
@@ -67,7 +72,7 @@ public class RegistrationTests extends BaseTest {
     public void emptyFields() {
         Assert.assertTrue(isDisplayed(registrationPage.logo));
         loginPage = registrationPage.clickCreateAccountButton();
-        String expectedErrorMessage = data.getJSONObject("registrationScreen").getString("emptyErrorMessageiOS");
+        String expectedErrorMessage = registrationScreen.getString("emptyErrorMessage");
         String actualErrorMessage = registrationPage.getErrorMessage(registrationPage.emptyErrorMessage);
         Assert.assertEquals(actualErrorMessage, expectedErrorMessage);
     }
@@ -75,15 +80,15 @@ public class RegistrationTests extends BaseTest {
     @Test(priority = 4)
     public void invalidEmail() {
         Assert.assertTrue(isDisplayed(registrationPage.logo));
-        registrationPage.enterName(data.getJSONObject("registrationScreen").getString("validName"));
-        registrationPage.enterEmail(data.getJSONObject("registrationScreen").getString("invalidEmail"));
-        registrationPage.enterPassword(data.getJSONObject("registrationScreen").getString("validPassword"));
-        registrationPage.enterConfirmPassword(data.getJSONObject("registrationScreen").getString("validPassword"));
+        registrationPage.enterName(registrationScreen.getString("validName"));
+        registrationPage.enterEmail(registrationScreen.getString("invalidEmail"));
+        registrationPage.enterPassword(registrationScreen.getString("validPassword"));
+        registrationPage.enterConfirmPassword(registrationScreen.getString("validPassword"));
         if (platformName.equals("iOS")) {
             hideIOSKeyboard();
         }
         loginPage = registrationPage.clickCreateAccountButton();
-        String expectedErrorMessage = data.getJSONObject("registrationScreen").getString("invalidEmailMessage");
+        String expectedErrorMessage = registrationScreen.getString("invalidEmailMessage");
         String actualErrorMessage = registrationPage.getErrorMessage(registrationPage.invalidEmailErrorMessage);
         Assert.assertEquals(expectedErrorMessage, actualErrorMessage);
 
@@ -92,15 +97,15 @@ public class RegistrationTests extends BaseTest {
     @Test(priority = 3)
     public void invalidName() {
         Assert.assertTrue(isDisplayed(registrationPage.logo));
-        registrationPage.enterName(data.getJSONObject("registrationScreen").getString("invalidName"));
-        registrationPage.enterEmail(data.getJSONObject("registrationScreen").getString("validEmail"));
-        registrationPage.enterPassword(data.getJSONObject("registrationScreen").getString("validPassword"));
-        registrationPage.enterConfirmPassword(data.getJSONObject("registrationScreen").getString("validPassword"));
+        registrationPage.enterName(registrationScreen.getString("invalidName"));
+        registrationPage.enterEmail(registrationScreen.getString("validEmail"));
+        registrationPage.enterPassword(registrationScreen.getString("validPassword"));
+        registrationPage.enterConfirmPassword(registrationScreen.getString("validPassword"));
         if (platformName.equals("iOS")) {
             hideIOSKeyboard();
         }
         loginPage = registrationPage.clickCreateAccountButton();
-        String expectedErrorMessage = data.getJSONObject("registrationScreen").getString("invalidNameMessage");
+        String expectedErrorMessage = registrationScreen.getString("invalidNameMessage");
         String actualErrorMessage = registrationPage.getErrorMessage(registrationPage.invalidNameErrorMessage);
         Assert.assertEquals(expectedErrorMessage, actualErrorMessage);
     }
@@ -108,15 +113,15 @@ public class RegistrationTests extends BaseTest {
     @Test(priority = 2)
     public void invalidPassword() {
         Assert.assertTrue(isDisplayed(registrationPage.logo));
-        registrationPage.enterName(data.getJSONObject("registrationScreen").getString("validName"));
-        registrationPage.enterEmail(data.getJSONObject("registrationScreen").getString("validEmail"));
-        registrationPage.enterPassword(data.getJSONObject("registrationScreen").getString("invalidPassword"));
-        registrationPage.enterConfirmPassword(data.getJSONObject("registrationScreen").getString("invalidPassword"));
+        registrationPage.enterName(registrationScreen.getString("validName"));
+        registrationPage.enterEmail(registrationScreen.getString("validEmail"));
+        registrationPage.enterPassword(registrationScreen.getString("invalidPassword"));
+        registrationPage.enterConfirmPassword(registrationScreen.getString("invalidPassword"));
         if (platformName.equals("iOS")) {
             hideIOSKeyboard();
         }
         loginPage = registrationPage.clickCreateAccountButton();
-        String expectedErrorMessage = data.getJSONObject("registrationScreen").getString("invalidPasswordMessage");
+        String expectedErrorMessage = registrationScreen.getString("invalidPasswordMessage");
         String actualErrorMessage = registrationPage.getErrorMessage(registrationPage.invalidPasswordErrorMessage);
         Assert.assertEquals(expectedErrorMessage, actualErrorMessage);
 
@@ -125,15 +130,15 @@ public class RegistrationTests extends BaseTest {
     @Test(priority = 1)
     public void invalidConfirmPassword() {
         Assert.assertTrue(isDisplayed(registrationPage.logo));
-        registrationPage.enterName(data.getJSONObject("registrationScreen").getString("validName"));
-        registrationPage.enterEmail(data.getJSONObject("registrationScreen").getString("validEmail"));
-        registrationPage.enterPassword(data.getJSONObject("registrationScreen").getString("validPassword"));
-        registrationPage.enterConfirmPassword(data.getJSONObject("registrationScreen").getString("invalidConfirmPassword"));
+        registrationPage.enterName(registrationScreen.getString("validName"));
+        registrationPage.enterEmail(registrationScreen.getString("validEmail"));
+        registrationPage.enterPassword(registrationScreen.getString("validPassword"));
+        registrationPage.enterConfirmPassword(registrationScreen.getString("invalidConfirmPassword"));
         if (platformName.equals("iOS")) {
             hideIOSKeyboard();
         }
         loginPage = registrationPage.clickCreateAccountButton();
-        String expectedErrorMessage = data.getJSONObject("registrationScreen").getString("invalidConfirmPasswordMessage");
+        String expectedErrorMessage = registrationScreen.getString("invalidConfirmPasswordMessage");
         String actualErrorMessage = registrationPage.getErrorMessage(registrationPage.invalidConfirmPasswordErrorMessage);
         Assert.assertEquals(expectedErrorMessage, actualErrorMessage);
     }
@@ -141,15 +146,15 @@ public class RegistrationTests extends BaseTest {
     @Test(priority = 7)
     public void emailAlreadyExist() {
         Assert.assertTrue(isDisplayed(registrationPage.logo));
-        registrationPage.enterName(data.getJSONObject("registrationScreen").getString("validName"));
-        registrationPage.enterEmail(data.getJSONObject("registrationScreen").getString("validEmail"));
-        registrationPage.enterPassword(data.getJSONObject("registrationScreen").getString("validPassword"));
-        registrationPage.enterConfirmPassword(data.getJSONObject("registrationScreen").getString("validPassword"));
+        registrationPage.enterName(registrationScreen.getString("validName"));
+        registrationPage.enterEmail(registrationScreen.getString("validEmail"));
+        registrationPage.enterPassword(registrationScreen.getString("validPassword"));
+        registrationPage.enterConfirmPassword(registrationScreen.getString("validPassword"));
         if (platformName.equals("iOS")) {
             hideIOSKeyboard();
         }
         loginPage = registrationPage.clickCreateAccountButton();
-        String expectedErrorMessage = data.getJSONObject("registrationScreen").getString("existingEmailErrorMessage");
+        String expectedErrorMessage = registrationScreen.getString("existingEmailErrorMessage");
         String actualErrorMessage = registrationPage.getErrorMessage(registrationPage.existingEmailErrorMessage);
         Assert.assertEquals(expectedErrorMessage, actualErrorMessage);
 

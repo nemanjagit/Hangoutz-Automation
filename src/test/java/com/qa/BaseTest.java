@@ -24,7 +24,7 @@ public class BaseTest {
     public static AppiumDriver driver;
     protected Properties properties;
     InputStream inputStream;
-    public String platformName;
+    public static String platformName;
 
     @BeforeMethod
     public void before() throws Exception {
@@ -75,6 +75,11 @@ public class BaseTest {
     public void waitForVisibility(WebElement element) {
         WebDriverWait wait = new WebDriverWait(driver, TestUtils.SHORT_WAIT);
         wait.until(ExpectedConditions.visibilityOf(element));
+    }
+
+    public void waitForPresence(By locator) {
+        WebDriverWait wait = new WebDriverWait(driver, TestUtils.SHORT_WAIT);
+        wait.until(ExpectedConditions.presenceOfElementLocated(locator));
     }
 
     public void click(WebElement element) {
