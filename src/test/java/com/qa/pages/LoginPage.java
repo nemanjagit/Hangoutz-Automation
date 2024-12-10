@@ -70,6 +70,9 @@ public class LoginPage extends BaseTest {
     public EventPage login(String email, String password) {
         enterEmail(email);
         enterPassword(password);
+        if (platformName.equals("iOS")) {
+            hideIOSKeyboard();
+        }
         return clickLoginButton();
     }
 
@@ -77,10 +80,5 @@ public class LoginPage extends BaseTest {
         return isPresent(logo);
     }
 
-    public EventPage Login (String email, String password) {
-        enterEmail(email);
-        enterPassword(password);
-        return clickLoginButton();
-    }
 
 }

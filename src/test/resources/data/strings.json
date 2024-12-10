@@ -1,8 +1,8 @@
 {
   "loginScreen": {
-    "validEmail": "nemanja@gmail.com",
+    "validEmail": "milan@gmail.com",
     "invalidEmail": "@gmail.com",
-    "validPassword": "Nemanja9",
+    "validPassword": "MilanObrenov9",
     "invalidPassword": "12345678",
     "incorrectErrorMessage": "Incorrect email or password",
     "emptyErrorMessage": "All fields must be filled!"
@@ -10,7 +10,7 @@
   "registrationScreen": {
     "validName": "Milan",
     "invalidName": "Mi",
-    "validEmail": "milan3@gmail.com",
+    "validEmail": "milan@gmail.com",
     "invalidEmail": "@gmail.com",
     "validPassword": "milan1234",
     "invalidPassword": "1234567",
@@ -23,6 +23,10 @@
     "existingEmailErrorMessage": "Email already in use"
   },
   "settingsScreen": {
+    "enteredName": "Nemanjaaa",
+    "SLBPrice": "$29.99"
+  },
+  "eventScreen": {
     "enteredName": "Nemanjaaa",
     "SLBPrice": "$29.99"
   }
