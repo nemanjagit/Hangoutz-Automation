@@ -59,7 +59,7 @@ public class SettingsTests extends BaseTest {
     @Test
     public void changeName(){
         settingsPage.clickOnEditIcon();
-        String nameToEnter = data.getJSONObject("settingsScreen").getString("enteredName");
+        String nameToEnter = settingsScreen.getString("enteredName");
         settingsPage.enterName(nameToEnter);
         settingsPage.clickOnConfirmEditIcon();
         String actualName = settingsPage.getName();
