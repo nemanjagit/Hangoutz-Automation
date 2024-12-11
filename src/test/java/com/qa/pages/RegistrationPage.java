@@ -6,6 +6,7 @@ import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import io.appium.java_client.pagefactory.iOSXCUITFindBy;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
+import org.testng.Assert;
 
 
 public class RegistrationPage extends BaseTest {
@@ -91,5 +92,13 @@ public class RegistrationPage extends BaseTest {
         return element.getText();
     }
 
-
+    public void registerNewAccount(String name,String email, String password, String confirmPassword) {
+        Assert.assertTrue(isDisplayed(logo));
+        enterName(name);
+        enterEmail(email);
+        enterPassword(password);
+        enterConfirmPassword(confirmPassword);
+        hideIOSKeyboard();
+        clickCreateAccountButton();
+    }
 }

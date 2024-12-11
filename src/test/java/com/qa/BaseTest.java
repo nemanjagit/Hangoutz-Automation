@@ -7,7 +7,10 @@ import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.options.XCUITestOptions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.Point;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.PointerInput;
+import org.openqa.selenium.interactions.Sequence;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterMethod;
@@ -17,7 +20,13 @@ import com.qa.utils.TestUtils;
 import java.io.InputStream;
 import java.net.URI;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.Properties;
+
+import static java.time.Duration.ofMillis;
+import static org.openqa.selenium.interactions.PointerInput.Kind.TOUCH;
+import static org.openqa.selenium.interactions.PointerInput.MouseButton.LEFT;
+import static org.openqa.selenium.interactions.PointerInput.Origin.viewport;
 
 
 public class BaseTest {
@@ -58,6 +67,7 @@ public class BaseTest {
                     iOSOptions.setAutomationName(properties.getProperty("iOSAutomationName")).
                             setDeviceName(properties.getProperty("iOSDeviceName")).
                             setPlatformVersion(properties.getProperty("iOSPlatformVersion")).
+                            setUdid(properties.getProperty("iOSUdId")).
                             setApp(appUrl);
 
                     driver = new IOSDriver(url, iOSOptions);
@@ -118,6 +128,16 @@ public class BaseTest {
             return false;
         }
         return true;
+    }
+
+    private final static PointerInput FINGER = new PointerInput(TOUCH, "finger");
+    public  void doSwipe(AppiumDriver driver, Point start, Point end, int duration) {
+        Sequence swipe = new Sequence(FINGER, 1)
+                .addAction(FINGER.createPointerMove(ofMillis(0), viewport(), start.getX(), start.getY()))
+                .addAction(FINGER.createPointerDown(LEFT.asArg()))
+                .addAction(FINGER.createPointerMove(ofMillis(duration), viewport(), end.getX(), end.getY()))
+                .addAction(FINGER.createPointerUp(LEFT.asArg()));
+        driver.perform(Arrays.asList(swipe));
     }
 
     @AfterMethod

@@ -10,7 +10,7 @@
   "registrationScreen": {
     "validName": "Milan",
     "invalidName": "Mi",
-    "validEmail": "milan@gmail.com",
+    "validEmail": "obrenovmilan98@gmail.com",
     "invalidEmail": "@gmail.com",
     "validPassword": "milan1234",
     "invalidPassword": "1234567",
@@ -29,6 +29,10 @@
   "eventScreen": {
     "enteredName": "Nemanjaaa",
     "SLBPrice": "$29.99"
+  },
+  "friendsScreen": {
+    "enteredName": "Bojan"
   }
+
 }
 

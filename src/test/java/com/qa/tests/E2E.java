@@ -4,6 +4,7 @@ import com.qa.BaseTest;
 import com.qa.pages.*;
 import org.json.JSONObject;
 import org.json.JSONTokener;
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -18,6 +19,7 @@ public class E2E extends BaseTest {
     RegistrationPage registrationPage;
     EventPage eventPage;
     JSONObject registrationScreen;
+    JSONObject friendsScreen;
     SettingsPage settingsPage;
     FriendsPage friendsPage;
     Random random = new Random();
@@ -31,6 +33,7 @@ public class E2E extends BaseTest {
 
             data = new JSONObject(tokener);
             registrationScreen = data.getJSONObject("registrationScreen");
+            friendsScreen = data.getJSONObject("friendsScreen");
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -50,6 +53,28 @@ public class E2E extends BaseTest {
 
     @Test
     public void iOSTest(){
+        Assert.assertTrue(isDisplayed(loginPage.logo));
+        registrationPage = loginPage.clickCreateAccountButton();
+        registrationPage.registerNewAccount(registrationScreen.getString("validName"),
+                                            (registrationScreen.getString("validEmail")),
+                                            registrationScreen.getString("validPassword"),
+                                            registrationScreen.getString("validPassword"));
+        eventPage = loginPage.login(registrationScreen.getString("validEmail"),
+                                registrationScreen.getString("validPassword"));
+        Assert.assertTrue(isDisplayed(eventPage.going));
+        friendsPage = eventPage.navigateToFriendsPage();
+        friendsPage.clickAddFriendButton();
+        friendsPage.clickOnSearchField();
+        friendsPage.enterUserName(friendsScreen.getString("enteredName"));
+        friendsPage.addUser();
+        friendsPage.scrollDown();
+        String expectedFriendName = friendsScreen.getString("enteredName");
+        String actualFriendName = friendsPage.getFriendName();
+        Assert.assertEquals(expectedFriendName, actualFriendName);
+        settingsPage = eventPage.navigateToSettingsPage();
+        loginPage = settingsPage.clickOnLogoutButton();
+        Assert.assertTrue(isDisplayed(loginPage.logo));
+
 
     }
 
