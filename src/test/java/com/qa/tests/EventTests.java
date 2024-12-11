@@ -55,7 +55,7 @@ public class EventTests extends BaseTest {
     }
 
     @Test
-    public void checkAcceptedEvent() throws InterruptedException {
+    public void checkAcceptedEvent(){
         eventPage.navigateToInvited();
         String title = eventPage.getCardTitle(1);
         eventPage.acceptInvite(1);
@@ -64,6 +64,7 @@ public class EventTests extends BaseTest {
         eventPage.navigateToGoing();
         boolean appearedInGoing = eventPage.cardInList(title);
         Assert.assertTrue(appearedInGoing);
+
     }
 
 
