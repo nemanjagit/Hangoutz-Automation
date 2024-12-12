@@ -11,7 +11,7 @@ import org.testng.annotations.Test;
 
 import java.io.InputStream;
 
-public class E2ETests extends BaseTest {
+public class E2ETestsAndroid extends BaseTest {
     JSONObject data;
     InputStream dataIs;
     LoginPage loginPage;

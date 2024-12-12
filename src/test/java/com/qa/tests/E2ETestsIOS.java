@@ -12,7 +12,7 @@ import org.testng.annotations.Test;
 import java.io.InputStream;
 import java.util.Random;
 
-public class E2E extends BaseTest {
+public class E2ETestsIOS extends BaseTest {
     JSONObject data;
     InputStream dataIs;
     LoginPage loginPage;
