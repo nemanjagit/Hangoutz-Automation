@@ -4,6 +4,7 @@ import com.qa.BottomNavigation;
 import io.appium.java_client.AppiumBy;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.iOSXCUITFindBy;
+import org.openqa.selenium.Point;
 import org.openqa.selenium.WebElement;
 
 import java.util.List;
@@ -24,24 +25,27 @@ public class EventPage extends BottomNavigation {
 
     @AndroidFindBy(xpath = "(//android.view.View[@content-desc=\"eventCard\"])/parent::*")
     //@iOSXCUITFindBy(accessibility = "card") to be added
-    public List<WebElement> eventCards;
+    public volatile List<WebElement> eventCards;
 
 
     public void navigateToInvited(){
         click(invited);
         //add iOS
         waitForPresence(AppiumBy.accessibilityId("acceptInvitationButton"));
+        eventCards = driver.findElements(AppiumBy.xpath("(//android.view.View[@content-desc=\"eventCard\"])/parent::*"));
     }
     public void navigateToCreated(){
         click(created);
         //add iOS
         //waitForPresence(AppiumBy.accessibilityId(""));
+        //eventCards = driver.findElements(AppiumBy.xpath("(//android.view.View[@content-desc=\"eventCard\"])/parent::*"));
     }
 
     public void navigateToGoing(){
         click(going);
         //add iOS
         waitForPresence(AppiumBy.accessibilityId("numberOfPeople"));
+        eventCards = driver.findElements(AppiumBy.xpath("(//android.view.View[@content-desc=\"eventCard\"])/parent::*"));
     }
 
     public WebElement getCard(int cardNumber) {
@@ -66,7 +70,7 @@ public class EventPage extends BottomNavigation {
         //add iOS
         WebElement acceptButtonElement = card.findElement(AppiumBy.xpath("(//android.view.View[@content-desc=\"acceptInvitationButton\"])"));
         click(acceptButtonElement);
-        eventCards.remove(cardNumber-1);
+        eventCards = driver.findElements(AppiumBy.xpath("(//android.view.View[@content-desc=\"eventCard\"])/parent::*"));
     }
 
     //assumed that event title is unique
@@ -82,5 +86,28 @@ public class EventPage extends BottomNavigation {
         return found;
     }
 
+    public void tapOnCard(String title) {
+        waitForPresence(AppiumBy.xpath("(//android.view.View[@content-desc=\"eventCard\"])/parent::*"));
+        eventCards = driver.findElements(AppiumBy.xpath("(//android.view.View[@content-desc=\"eventCard\"])/parent::*"));
+        WebElement card;
+        for (int i = 1; i < eventCards.size()+1; i++) {
+            if(getCardTitle(i).equals(title)) {
+                card = eventCards.get(i-1);
+                click(card);
+                break;
+            }
+        }
+    }
 
+    public void scrollToParticipant(){
+        doSwipe(driver,new Point((int) (523), (int) (1100)),new Point((int) (523), (int) (600)),2000);
+
+    }
+
+    public String getParticipantName(String expectedName) {
+        //waitForPresence(AppiumBy.xpath("//android.widget.TextView[@text=\""+expectedName+"\"]"));
+        WebElement element = driver.findElement(AppiumBy.xpath("//android.widget.TextView[@text=\""+expectedName+"\"]"));
+        return getText(element);
+
+    }
 }

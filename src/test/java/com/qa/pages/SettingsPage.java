@@ -26,6 +26,10 @@ public class SettingsPage extends BottomNavigation {
     @iOSXCUITFindBy(accessibility = "nameLabel")
     public WebElement name;
 
+    @AndroidFindBy(accessibility = "settingsNameField")
+    @iOSXCUITFindBy(accessibility = "nameLabel")
+    public WebElement originalName;
+
     @AndroidFindBy(xpath = "//*[@content-desc='settingsBackgroundLines']/following-sibling::*[2]")
     @iOSXCUITFindBy(accessibility = "emailLabel")
     public WebElement emailLabel;
@@ -49,6 +53,10 @@ public class SettingsPage extends BottomNavigation {
 
     public String getName() {
         return getText(name);
+    }
+
+    public String getNameBeforeEdit(){
+        return getText(originalName);
     }
 
     public String getEmail() {

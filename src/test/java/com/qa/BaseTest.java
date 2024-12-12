@@ -2,6 +2,8 @@ package com.qa;
 
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.android.nativekey.AndroidKey;
+import io.appium.java_client.android.nativekey.KeyEvent;
 import io.appium.java_client.android.options.UiAutomator2Options;
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.options.XCUITestOptions;
@@ -138,6 +140,11 @@ public class BaseTest {
                 .addAction(FINGER.createPointerMove(ofMillis(duration), viewport(), end.getX(), end.getY()))
                 .addAction(FINGER.createPointerUp(LEFT.asArg()));
         driver.perform(Arrays.asList(swipe));
+    }
+
+    public void goBack(){
+        AndroidDriver androidDriver = (AndroidDriver) driver;
+        androidDriver.pressKey(new KeyEvent(AndroidKey.BACK));
     }
 
     @AfterMethod
